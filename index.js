@@ -22,9 +22,9 @@ function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
-bot.sendMessage(chatId, "Started Looking for Any Data Breaches !!");
 
 if (isValidEmail(message)) {
+bot.sendMessage(chatId, "Started Looking for Any Data Breaches !!");
    
   async function fetchData(email) {
     try {
