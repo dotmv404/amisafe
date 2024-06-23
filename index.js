@@ -5,7 +5,7 @@ const tough = require("tough-cookie");
 const cheerio = require("cheerio");
 const https = require("https");
 const token = "7476929951:AAEPRiN54f2EiDxL66nGLmCICzBcwU5d8WQ";
-
+const url = 'https://api.npoint.io/821f67117e648ecb50bf';
 const bot = new TelegramBot(token, { polling: true });
 
 bot.onText(/\/echo (.+)/, (msg, match) => {
@@ -91,12 +91,19 @@ bot.on("message", (msg) => {
     ];
 
     const cookieJar = new tough.CookieJar();
-
-    // Manually add cookies to the jar
-   cookieJar.setCookieSync('PHPSESSID=plg6joum82dq8fnhcafqa7su21', 'https://leakpeek.com');
+axios.get('https://api.npoint.io/821f67117e648ecb50bf')
+  .then(response => {
+    const data = response.data;
+  cookieJar.setCookieSync(`PHPSESSID=${data}`, 'https://leakpeek.com');
   cookieJar.setCookieSync('TawkConnectionTime=0', 'https://leakpeek.com');
   cookieJar.setCookieSync('twk_uuid_5e0a72c07e39ea1242a266c8=%7B%22uuid%22%3A%221.SwtWabLbJssfjDzW2FMtalvwNzZReGCP883yO0SegJ1dcHabAO1h1J2Q2nU1WkpHIpwLJLCfFBAyXADghxfn81Rmimod6i4FA3q20qGhB2by3elVBabs6%22%2C%22version%22%3A3%2C%22domain%22%3A%22leakpeek.com%22%2C%22ts%22%3A1719008972333%7D', 'https://leakpeek.com');
 
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+    // Manually add cookies to the jar
+ 
 
     const client = wrapper(
       axios.create({
